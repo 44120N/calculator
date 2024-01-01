@@ -37,7 +37,13 @@ function calculateResult() {
         });
         
         expression = expression.replace(/tan\((.*?)\)/g, function(_, p1) {
-            return `Math.tan(${isDegreeMode ? toRadians(p1) : p1})`;
+            if (isDegreeMode) {
+                const result = `Math.tan(${toRadians(p1)})`;
+                return isNaN(result) ? 'NaN' : result;
+            } else {
+                const result = `Math.tan(${p1})`;
+                return isNaN(result) ? 'NaN' : result;
+            }
         });
 
         // Trigonometry Inverse Functions
@@ -62,7 +68,8 @@ function calculateResult() {
 
         var resultFunction = new Function('return ' + expression);
         var result = resultFunction();
-        document.getElementById('display').value = result;
+        roundResult = parseFloat(result.toFixed(10));
+        document.getElementById('display').value = roundResult;
     } catch (error) {
         alert('Error: ' + error.message);
     }
