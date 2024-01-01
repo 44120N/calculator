@@ -28,47 +28,30 @@ function calculateResult() {
         expression = expression.replace(/e/g, 'Math.E');
 
         // Trigonometry Functions
-        expression = expression.replace(/sin\((.*?)\)/g, function(_, p1) {
-            return `Math.sin(${isDegreeMode ? toRadians(p1) : p1})`;
-        });
-        
-        expression = expression.replace(/cos\((.*?)\)/g, function(_, p1) {
-            return `Math.cos(${isDegreeMode ? toRadians(p1) : p1})`;
-        });
-        
-        expression = expression.replace(/tan\((.*?)\)/g, function(_, p1) {
-            if (isDegreeMode) {
-                const result = `Math.tan(${toRadians(p1)})`;
-                return isNaN(result) ? 'NaN' : result;
-            } else {
-                const result = `Math.tan(${p1})`;
-                return isNaN(result) ? 'NaN' : result;
-            }
-        });
+        expression = expression.replace(/sin\((.*?)\)/g, 'sin($1)');
+        expression = expression.replace(/cos\((.*?)\)/g, 'cos($1)');
+        expression = expression.replace(/tan\((.*?)\)/g, 'tan($1)');
 
         // Trigonometry Inverse Functions
         expression = expression.replace(/sin\**-1\((.*?)\)/g, function(_, p1) {
-            const result = Math.asin(p1);
-            return `toRadians(${result}, true)`;
+            return toRadians(Math.asin(p1), true);
         });
 
         expression = expression.replace(/cos\**-1\((.*?)\)/g, function(_, p1) {
-            const result = Math.acos(p1);
-            return `toRadians(${result}, true)`;
+            return toRadians(Math.acos(p1), true);
         });
 
         expression = expression.replace(/tan\**-1\((.*?)\)/g, function(_, p1) {
-            const result = Math.atan(p1);
-            return `toRadians(${result}, true)`;
+            return toRadians(Math.atan(p1), true);
         });
 
         // Logarithms
         expression = expression.replace(/log\((.*?)\)/g, 'Math.log10($1)')
         expression = expression.replace(/ln\((.*?)\)/g, 'Math.log($1)')
 
-        var resultFunction = new Function('return ' + expression);
-        var result = resultFunction();
-        roundResult = parseFloat(result.toFixed(10));
+        var result = eval(expression);
+        roundResult = parseFloat(result.toFixed(12));
+        console.log(roundResult);
         document.getElementById('display').value = roundResult;
     } catch (error) {
         alert('Error: ' + error.message);
@@ -88,6 +71,25 @@ function factorial(n) {
         return 1;
     }
     return n * factorial(n - 1);
+}
+
+// Trigonometry functions
+function sin(angle){
+    return Math.sin(toRadians(angle, false))
+};
+
+function cos(angle){
+    return Math.cos(toRadians(angle, false))
+};
+
+function tan(angle){
+    result = Math.tan(toRadians(angle, false));
+    if ((result >= 5443746451065123)){
+        return Infinity;
+    }
+    else{
+        return result;
+    }
 }
 
 // Trigonometry Rad-Deg
@@ -113,11 +115,11 @@ function updateAngleModeButton() {
     activeSpan.classList.add('active');
 }
 
-function toRadians(value, isInverse) {
-    if (isInverse) {
-        return isDegreeMode ? value * (180 / Math.PI) : value;
+function toRadians(value) {
+    if (isInvActive) {
+        return isDegreeMode ? (value * (180 / Math.PI)) % 360 : value;
     } else {
-        return value * (Math.PI / 180);
+        return isDegreeMode ? (value * (Math.PI / 180)) % (2 * Math.PI) : value;
     }
 }
 
@@ -140,7 +142,7 @@ function updateInvButton() {
 
 // Trigonometry Display
 function calcSin() {
-    const sin = document.getElementById('display');
+    var sin = document.getElementById('display');
 
     if (isInvActive) {
         sin.value += 'sin^-1(';
@@ -150,7 +152,7 @@ function calcSin() {
 }
 
 function calcCos() {
-    const cos = document.getElementById('display');
+    var cos = document.getElementById('display');
 
     if (isInvActive) {
         cos.value += 'cos^-1(';
@@ -160,7 +162,7 @@ function calcCos() {
 }
 
 function calcTan() {
-    const tan = document.getElementById('display');
+    var tan = document.getElementById('display');
 
     if (isInvActive) {
         tan.value += 'tan^-1(';
