@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Inconsolata', monospace;
+    background-color: #a7eff3;
+}
+
+.calculator {
+    display: grid;
+    gap: 8px;
+    width: 500px;
+    padding: 16px;
+    background-color: #0a1630; /* Darker blue background for the calculator */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#base {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#extended {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.display {
+    grid-column: span 2;
+    height: 40px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: right;
+    padding: 8px;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.button {
+    height: 40px;
+    background-color: #2c3e50; /* Blue variation for the buttons */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: 'Inconsolata', monospace;
+    color: #ecf0f1; /* White text color */
+}
+
+.button.double {
+    grid-column: span 2;
+}
+
+.button:hover {
+    background-color: #000000; /* Darker background on hover */
+    color: #bdc3c7; /* Light grey text color on hover */
+}
+
+.buttons .active{
+    color: #ffaa77;
+}
+
+/* Colors */
+.button.red {
+    background-color: #ff6464; /* Light Red */
+    color: #fff;
+}
+
+.button.orange {
+    background-color: #ffaa77; /* Light Orange */
+    color: #fff;
+}
+
+.button.green {
+    background-color: #58d56b; /* Light Green */
+    color: #fff;
+}
