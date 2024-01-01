@@ -8,7 +8,7 @@ function clearDisplay() {
 
 function calculateResult() {
     var expression = document.getElementById('display').value;
-
+    
     try {
         // Basic Operators
         expression = expression.replace(/×/g, '*');
@@ -17,13 +17,16 @@ function calculateResult() {
         expression = expression.replace(/\^/g, '**');
         expression = expression.replace(/(?:√|sqrt)\((.*?)\)/g, 'Math.sqrt($1)');
         
+        // Exponent
+        expression = expression.replace(/E/g, '*10**')
+
         // Factorial
         expression = expression.replace(/(.*?)!/g, 'factorial($1)');
 
         // Mathematics Constant
         expression = expression.replace(/π/g, 'Math.PI');
         expression = expression.replace(/e/g, 'Math.E');
-        
+
         // Trigonometry Functions
         expression = expression.replace(/sin\((.*?)\)/g, function(_, p1) {
             return `Math.sin(${isDegreeMode ? toRadians(p1) : p1})`;
@@ -57,13 +60,9 @@ function calculateResult() {
         expression = expression.replace(/log\((.*?)\)/g, 'Math.log10($1)')
         expression = expression.replace(/ln\((.*?)\)/g, 'Math.log($1)')
 
-        // Exponent
-        expression = expression.replace(/E/g, '*10**')
-
-        var result = eval(expression);
-
+        var resultFunction = new Function('return ' + expression);
+        var result = resultFunction();
         document.getElementById('display').value = result;
-        
     } catch (error) {
         alert('Error: ' + error.message);
     }
