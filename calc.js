@@ -1,3 +1,5 @@
+let ans = null;
+
 function appendToDisplay(value) {
     document.getElementById('display').value += value;
 }
@@ -49,12 +51,18 @@ function calculateResult() {
         expression = expression.replace(/log\((.*?)\)/g, 'Math.log10($1)')
         expression = expression.replace(/ln\((.*?)\)/g, 'Math.log($1)')
 
-        var result = eval(expression);
-        roundResult = parseFloat(result.toFixed(12));
+        res = eval(expression);
+        ans = roundResult = parseFloat(res.toFixed(12));
         console.log(roundResult);
         document.getElementById('display').value = roundResult;
     } catch (error) {
         alert('Error: ' + error.message);
+    }
+}
+
+function recallAns() {
+    if (ans !== null) {
+        document.getElementById('display').value += ans;
     }
 }
 
