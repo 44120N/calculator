@@ -16,7 +16,7 @@ body {
 }
 
 .calculator {
-    position: fixed;
+    margin: auto;
     display: grid;
     gap: 8px;
     width: 500px;
