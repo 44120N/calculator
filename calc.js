@@ -15,7 +15,7 @@ function calculateResult() {
         expression = expression.replace(/÷/g, '/');
         expression = expression.replace(/(.*?)%/g, '($1)/100');
         expression = expression.replace(/\^/g, '**');
-        expression = expression.replace(/sqrt\((.*?)\)/g, 'Math.sqrt($1)');
+        expression = expression.replace(/(?:√|sqrt)\((.*?)\)/g, 'Math.sqrt($1)');
         
         // Factorial
         expression = expression.replace(/(.*?)!/g, 'factorial($1)');
