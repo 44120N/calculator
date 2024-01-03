@@ -85,13 +85,17 @@ body {
     color: #fff;
 }
 
-.button.orange {
-    background-color: #ffaa77;
+.button.red:hover{
+    background-color: #581d1d;
     color: #fff;
 }
 
 .button.green {
     background-color: #58d56b;
+    color: #fff;
+}
+.button.green:hover {
+    background-color: #265a2e;
     color: #fff;
 }
 
